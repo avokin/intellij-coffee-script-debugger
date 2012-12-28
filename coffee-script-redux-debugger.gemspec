@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Andrey Vokin"]
   s.email       = ["andrey.vokin@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = "Gem for debugging CoffeeScript in Rails applications"
+  s.description = "Gem for debugging CoffeeScript in Rails applications"
 
   s.rubyforge_project = "coffee-script-redux-debugger"
 
@@ -19,8 +19,4 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "sprockets"
-
-  # specify any dependencies here; for example:
-  # s.add_development_dependency "rspec"
-  # s.add_runtime_dependency "rest-client"
 end
