@@ -18,5 +18,7 @@ Gem::Specification.new do |s|
   s.executables   = ["coffee-script-redux-debugger"]
   s.require_paths = ["lib"]
 
+  s.add_dependency 'coffee-script'
   s.add_dependency "sprockets"
+  s.add_dependency "execjs"
 end

@@ -3,7 +3,7 @@ require "coffee-script-redux-debugger/source_map_comment"
 require "sprockets"
 require 'sprockets/processing'
 require 'sprockets/server'
-require 'coffee_script'
+require 'coffee-script-redux-debugger/coffee_script_redux'
 
 module Sprockets
   class CoffeeScriptReduxDebuggerClass < ::Rails::Railtie
