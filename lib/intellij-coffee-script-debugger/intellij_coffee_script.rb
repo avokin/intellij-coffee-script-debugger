@@ -4,9 +4,6 @@ require 'execjs'
 require 'coffee_script/source'
 
 module CoffeeScript
-  EngineError      = ExecJS::RuntimeError
-  CompilationError = ExecJS::ProgramError
-
   module Source
     def self.bundled_path
       File.expand_path('coffee-script.js', File.dirname(__FILE__))
@@ -70,19 +67,26 @@ module CoffeeScript
 
       if options[:format] == :map
         options.delete(:format)
-        options["--map"] = true
-      end
-      Source.context.call("CoffeeScript.compile", script, options)
+        options[:sourceMap] = true
+        options[:sourceFiles] = [options[:filename]]
 
-      #script = script.read if script.respond_to?(:read)
-      #
-      #unless options.key?(:bare)
-      #  options[:bare] = false
-      #end
-      #
-      #format = options[:format] == :map ? 'sourceMap' : 'js'
-      #options.delete(:format)
-      #Source.context.call("(function() { return root.CoffeeScript.#{ format }(root.CoffeeScript.compile(root.CoffeeScript.parse.apply(this, arguments))) })", script, options)
+        wrapper = <<-WRAPPER
+            (function(script, options) {
+              try {
+                return CoffeeScript.compile(script, options);
+              } catch (err) {
+                if (err instanceof SyntaxError && err.location) {
+                  throw new SyntaxError([options.filename, err.location.first_line + 1, err.location.first_column + 1].join(":") + ": " + err.message)
+                } else {
+                  throw err;
+                }
+              }
+            })
+        WRAPPER
+        Source.context.call(wrapper, script, options)
+      else
+        Source.context.call("CoffeeScript.compile", script, options)
+      end
     end
   end
 end
