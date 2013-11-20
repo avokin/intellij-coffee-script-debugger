@@ -1,13 +1,13 @@
-require "coffee-script-redux-debugger/version"
-require "coffee-script-redux-debugger/source_map_comment"
-require "sprockets"
+require 'intellij-coffee-script-debugger/version'
+require 'intellij-coffee-script-debugger/source_map_comment'
+require 'sprockets'
 require 'sprockets/processing'
 require 'sprockets/server'
-require 'coffee-script-redux-debugger/coffee_script_redux'
+require 'intellij-coffee-script-debugger/intellij_coffee_script'
 
 module Sprockets
-  class CoffeeScriptReduxDebuggerClass < ::Rails::Railtie
-    initializer "coffee.script.redux.debugger", :after => "sprockets.environment" do |app|
+  class IntellijCoffeeScriptDebuggerClass < ::Rails::Railtie
+    initializer "intellij.coffee.script.debugger", :after => "sprockets.environment" do |app|
       app.assets.register_postprocessor 'application/javascript', SourceMapComment
     end
   end

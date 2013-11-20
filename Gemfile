@@ -1,4 +1,4 @@
 source "http://rubygems.org"
 
-# Specify your gem's dependencies in coffee-script-redux-debugger.gemspec
+# Specify your gem's dependencies in intellij-coffee-script-debugger.gemspec
 gemspec
