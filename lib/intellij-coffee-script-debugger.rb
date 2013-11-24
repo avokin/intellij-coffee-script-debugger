@@ -28,13 +28,16 @@ module Sprockets
         [200, {'Content-Type' => 'application/javascript'}, [coffee_file]]
       elsif File.extname(path) == '.map'
         path = path.chomp('.map')
-
         asset = find_asset(path, :bundle => !body_only?(env))
 
-        coffee_file = File.read(asset.pathname)
-        source_map_result = CoffeeScript.compile(coffee_file, {:format => :map, :filename => File.basename(asset.pathname)})
-        source_map = source_map_result["v3SourceMap"]
-        [200, {'Content-Type' => 'application/json'}, [source_map]]
+        if File.extname(asset.pathname) == '.coffee'
+          coffee_file = File.read(asset.pathname)
+          source_map_result = CoffeeScript.compile(coffee_file, {:format => :map, :filename => File.basename(asset.pathname)})
+          source_map = source_map_result["v3SourceMap"]
+          [200, {'Content-Type' => 'application/json'}, [source_map]]
+        else
+          old_call(env)
+        end
       else
         old_call(env)
       end
